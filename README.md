@@ -5,18 +5,6 @@ Creates a lyric and a chorded songbook written in LaTeX, from a collection of fi
 
 ## Using MusicBooker
 
-First of all you need to select the document properties such as the title, the date and collection of files you are going to use. This can be done editing the initial variables of `main.py` file.
-
-```python
-document_title = "Songbook"
-document_date = "07-08-2015"
-
-music_list = [["Music 1 subtitle", 'music 1 filename'],
-              ["Music 2 subtitle", 'music 2 filename'],
-              ["Music 3 subtitle", 'music 3 filename']]
-```
-You can add as much musics as you want at `music_list` variable. And each music file must be inside `source` folder. This folder must be at the same directory level as `main.py`.
-
 In the begining of the file `Music.py` is the following variable:
 
 ```python
@@ -60,16 +48,23 @@ não importa quando, onde e o porquê.
 ---
 
 ## Runing MusicBooker
-### Windows
+#### Windows
 
 Install python3 and run `main.py`.
-#### Linux
+
+##### Linux
 
 In order to run this script on a Linux system you just need to navigate to the folder containing `main.py` and run the following command:
 
     $ ./main.py
 
-This will generate a folder called `result`containg two files: `chords.tex` and `lyrics.tex`. These can be compiled to obtain the songbook, as explained next.
+#### Console Interface
+
+Once the application is running console will ask for the needed information, such as document title, date and music files.
+
+    Tip: When selecting music file you can double press TAB for a list of available musics. And press TAB just once to autocomplete a music file name partially typed.
+
+Once the application is finished it is generated a folder called `result`contains two files: `chords.tex` and `lyrics.tex`. These can be compiled to obtain the songbook, as explained next.
 
 ---
 

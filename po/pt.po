@@ -1,0 +1,42 @@
+# Portuguese translations for PACKAGE package.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Rafael Gil, 2015.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-08-29 15:58+0100\n"
+"PO-Revision-Date: 2015-08-29 15:59+0100\n"
+"Last-Translator: Rafael Gil\n"
+"Language-Team: Portuguese\n"
+"Language: pt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: main.py:20
+msgid "Select a file title: "
+msgstr "Introduza um título para o documento: "
+
+#: main.py:21
+msgid "Select a file date: "
+msgstr "Introduza uma data para o documento: "
+
+#: main.py:26
+msgid "---- (press enter when finnished) ----"
+msgstr "---- (pressione enter para sair) ----"
+
+#: main.py:28
+msgid ": Enter music file: "
+msgstr ": Introduza um ficheiro de música: "
+
+#: main.py:33
+msgid "The entered file does not exist."
+msgstr "O ficheiro introduzido não existe."
+
+#: main.py:36
+msgid ": Enter music subtitle: "
+msgstr ": Introduza um subtítulo para a música: "
