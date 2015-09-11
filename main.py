@@ -87,6 +87,35 @@ tex_fim = """\\end{songs}
 
 \\end{document}"""
 
+presentation_inic = """\\documentclass[11pt]{beamer}
+\\usepackage[utf8]{inputenc}
+
+\\setbeamertemplate{navigation symbols}{} %% remove navigation symbols
+\\setbeamercolor{background canvas}{bg=black}
+\\setbeamercolor{normal text}{bg=yellow,fg=white}
+\\setbeamercolor{title}{fg=white}
+%%\\setbeamercolor{frametitle}{fg=white}
+
+\\usepackage[scaled=1.6]{helvet}
+\\renewcommand\\familydefault{\\sfdefault} 
+
+
+\\title{%s}
+\\subtitle{%s}
+\\date{} %% optional
+
+\\begin{document}
+
+\\begin{frame}
+  \\titlepage
+\\end{frame}
+
+\\centering
+\\obeylines
+"""
+
+presentation_fim = '\\end{document}'
+
 # --------------------------
 # --- Script starts here ---
 # --------------------------
@@ -96,9 +125,11 @@ if not os.path.exists("result"):
 
 lyrics_file = open('result/lyrics.tex', 'w')
 chords_file = open('result/chords.tex', 'w')
+presentation_file = open('result/presentation.tex', 'w')
 
 lyrics_file.write(tex_inic % ('lyric', document_title))
 chords_file.write(tex_inic % ('chorded', document_title))
+presentation_file.write(presentation_inic % (document_title, document_date))
 
 for music_item in music_list:
     subtitle = music_item[0]
@@ -107,9 +138,11 @@ for music_item in music_list:
     if not music_file == '':
         current_music = Music(music_file, subtitle)
         current_music.write_tex(chords_file, lyrics_file)
+        current_music.write_presentation(presentation_file)
 
 lyrics_file.write(tex_fim)
 chords_file.write(tex_fim)
+presentation_file.write(presentation_fim)
 
 lyrics_file.close()
 chords_file.close()

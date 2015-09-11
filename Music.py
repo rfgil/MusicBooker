@@ -1,6 +1,7 @@
 # coding=utf-8
 
-CHORUS_INDENTIFIER = "{CHORUS}"
+CHORUS_INDENTIFIER = '{CHORUS}'
+ORDER_INDENTIFIER = '{ORDER}'
 
 
 class Music():
@@ -11,7 +12,7 @@ class Music():
     verse_chords = []
 
     has_chorus = False
-    verse_before_chorus = 0
+    verses_before_chorus = 0
     start_with_chorus = False
 
     name = ''
@@ -88,18 +89,21 @@ class Music():
         self.verse_chords = []
 
         self.has_chorus = False
-        self.verse_before_chorus = 0
+        self.verses_before_chorus = 0
         self.start_with_chorus = False
 
         is_chorus = False
-        current_estrofe = 0
+        current_verse = 0
         chords_array = []
+
+        self.order = []
+        custom_order = ''
 
         for line in my_file:
             line = line.rstrip()
             line_chords = line
 
-            if self.is_chords(line):
+            if self.is_chords(line):  # Sets a array containing all chords in the correct position
                 chords_array = line.split(' ')
                 continue
 
@@ -107,20 +111,28 @@ class Music():
                 line_chords = self.insert_chords(line_chords, chords_array)
                 chords_array = []
 
-            if CHORUS_INDENTIFIER in line:
+            if ORDER_INDENTIFIER in line:
+                custom_order = line.replace(ORDER_INDENTIFIER, '')
+                custom_order = custom_order.replace(':', '')
+
+            elif CHORUS_INDENTIFIER in line:
                 is_chorus = True
                 self.has_chorus = True
-                if current_estrofe == 0:
+                if current_verse == 0:
                     self.start_with_chorus = True
 
             elif not line.strip():  # line is empty
                 if is_chorus:
                     is_chorus = False
                 else:
-                    current_estrofe += 1
+                    print(len(self.verse))
+                    if len(self.verse) < current_verse + 1 or not self.verse:  # Prevents error on multi empty lines
+                        continue
+                    else:
+                        current_verse += 1
 
-                if not self.has_chorus:  # Hasn't reached a chorus yet
-                    self.verse_before_chorus += 1
+                    if not self.has_chorus:  # Hasn't reached a chorus yet
+                        self.verses_before_chorus += 1
 
             elif is_chorus:
                 self.chorus += line + '\n'
@@ -128,15 +140,45 @@ class Music():
 
             else:
 
-                if len(self.verse) == current_estrofe:
+                if len(self.verse) == current_verse:
                     self.verse.append(line + '\n')
                     self.verse_chords.append(line_chords + '\n')
 
                 else:
-                    self.verse[current_estrofe] += line + '\n'
-                    self.verse_chords[current_estrofe] += line_chords + '\n'
+                    self.verse[current_verse] += line + '\n'
+                    self.verse_chords[current_verse] += line_chords + '\n'
 
         my_file.close()
+
+        if custom_order:
+            self.order = custom_order.split(',')
+            for i in range(len(self.order)):
+                self.order[i] = self.order[i].strip()
+
+                if str(self.order[i]) != CHORUS_INDENTIFIER:
+                    self.order[i] = int(self.order[i]) - 1
+        else:
+            for i in range(self.verses_before_chorus):
+                self.order += [i]
+
+            if self.has_chorus:
+                self.order += [CHORUS_INDENTIFIER]
+
+                repeat = self.verses_before_chorus
+                if repeat == 0: repeat = 1
+
+                verse_count = self.verses_before_chorus
+
+                while verse_count < len(self.verse):
+                    for i in range(repeat):
+                        self.order += [i + verse_count]
+
+                    self.order += [CHORUS_INDENTIFIER]
+                    verse_count += repeat
+
+            else:
+                for i in range(self.verses_before_chorus, len(self.verse)):
+                    self.order += [i]
 
     def write_tex(self, chords_file, lyrics_file):
         """
@@ -151,7 +193,7 @@ class Music():
         chords_file.write(musica_inic % (self.name, self.subtitle))
         lyrics_file.write(musica_inic % (self.name, self.subtitle))
 
-        for i in range(self.verse_before_chorus):
+        for i in range(self.verses_before_chorus):
             chords_file.write('\\beginverse\n' + self.verse_chords[i] + '\\endverse\n\n')
             lyrics_file.write('\\beginverse\n' + self.verse[i] + '\\endverse\n\n')
 
@@ -159,9 +201,30 @@ class Music():
             chords_file.write('\\beginchorus\n' + self.chorus_chords + '\\endchorus\n\n')
             lyrics_file.write('\\beginchorus\n' + self.chorus + '\\endchorus\n\n')
 
-        for i in range(self.verse_before_chorus, self.n_verse()):
+        for i in range(self.verses_before_chorus, self.n_verse()):
             chords_file.write('\\beginverse\n' + self.verse_chords[i] + '\\endverse\n\n')
             lyrics_file.write('\\beginverse\n' + self.verse[i] + '\\endverse\n\n')
 
         chords_file.write(musica_fim)
         lyrics_file.write(musica_fim)
+
+    def write_presentation(self, presentation_file):
+        """
+        Writes presentation LaTeX code to a file
+
+        @param presentation_file
+        """
+        presentation_file.write('\n%---------- ' + self.name + ' ----------\n\n')
+        print(self.order)
+        for item in self.order:
+            presentation_file.write('\\begin{frame}\n')
+
+            if item == CHORUS_INDENTIFIER:
+                presentation_file.write(self.chorus)
+
+            else:
+                presentation_file.write(self.verse[item])
+
+            presentation_file.write('\\end{frame}\n\n')
+
+        presentation_file.write('\\begin{frame}\n\\end{frame}\n\n')

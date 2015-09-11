@@ -1,5 +1,5 @@
 # MusicBooker
-Creates a lyric and a chorded songbook written in LaTeX, from a collection of files.
+Creates a lyric and a chorded songbook and a presentation written in LaTeX, from a collection of files.
 
 ---
 
@@ -8,12 +8,14 @@ Creates a lyric and a chorded songbook written in LaTeX, from a collection of fi
 In the begining of the file `Music.py` is the following variable:
 
 ```python
-CHORUS_INDENTIFIER = "{CHORUS}"
+CHORUS_INDENTIFIER = '{CHORUS}'
+ORDER_INDENTIFIER = '{ORDER}'
 ```
 
-This is used to identify the chorus in the music file. Here is a example of a music file:
+`CHORUS_INDENTIFIER` is used to identify the chorus in the music file. And `ORDER_INDENTIFIER` is used to set the order in which verses are suposed to be displayed in the presentation file. Here is a example of a music file:
 
 ```
+{ORDER}: 1, {CHORUS}, 1, 2
 F#-                         A
 Esta sede de Te encontrar em mim
 C#-                                 D
@@ -45,6 +47,19 @@ Tudo gira à Tua volta em função de Ti;
 não importa quando, onde e o porquê.
 ```
 
+The presentation file will have the following structure according to `ORDER_INDENTIFIER`:
+
+```
+Slide 1: 1st verse
+Slide 2: Chorus
+Slide 3: 2nd verse
+Slide 3: 1st verse
+```
+##### Note:
+
+`ORDER_INDENTIFIER` is optional. The programm will select a standard order to display slides if this variable is not present in the music file.
+
+
 ---
 
 ## Runing MusicBooker
@@ -62,7 +77,9 @@ In order to run this script on a Linux system you just need to navigate to the f
 
 Once the application is running console will ask for the needed information, such as document title, date and music files.
 
-    Tip: When selecting music file you can double press TAB for a list of available musics. And press TAB just once to autocomplete a music file name partially typed.
+##### Tip: 
+
+When selecting music file you can double press TAB for a list of available musics. And press TAB just once to autocomplete a music file name partially typed.
 
 Once the application is finished it is generated a folder called `result`contains two files: `chords.tex` and `lyrics.tex`. These can be compiled to obtain the songbook, as explained next.
 
