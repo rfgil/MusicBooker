@@ -100,10 +100,10 @@ class Music():
         custom_order = ''
 
         for line in my_file:
-            line = line.rstrip()
             line_chords = line
+            line = line.rstrip()
 
-            if self.is_chords(line):  # Sets a array containing all chords in the correct position
+            if self.is_chords(line_chords):  # Sets a array containing all chords in the correct position
                 chords_array = line.split(' ')
                 continue
 
@@ -125,7 +125,6 @@ class Music():
                 if is_chorus:
                     is_chorus = False
                 else:
-                    print(len(self.verse))
                     if len(self.verse) < current_verse + 1 or not self.verse:  # Prevents error on multi empty lines
                         continue
                     else:
@@ -171,7 +170,8 @@ class Music():
 
                 while verse_count < len(self.verse):
                     for i in range(repeat):
-                        self.order += [i + verse_count]
+                        if i + verse_count < len(self.verse):                        
+                            self.order += [i + verse_count]
 
                     self.order += [CHORUS_INDENTIFIER]
                     verse_count += repeat
@@ -215,7 +215,7 @@ class Music():
         @param presentation_file
         """
         presentation_file.write('\n%---------- ' + self.name + ' ----------\n\n')
-        print(self.order)
+        print("Printing: " + self.name)
         for item in self.order:
             presentation_file.write('\\begin{frame}\n')
 

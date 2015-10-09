@@ -87,7 +87,7 @@ tex_fim = """\\end{songs}
 
 \\end{document}"""
 
-presentation_inic = """\\documentclass[11pt]{beamer}
+presentation_inic = """\\documentclass[11pt, aspectratio=169]{beamer}
 \\usepackage[utf8]{inputenc}
 
 \\setbeamertemplate{navigation symbols}{} %% remove navigation symbols
