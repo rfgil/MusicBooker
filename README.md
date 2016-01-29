@@ -5,7 +5,7 @@ Creates a lyric and a chorded songbook and a presentation written in LaTeX, from
 
 ## Using MusicBooker
 
-In the begining of the file `Music.py` is the following variable:
+In the begining of the file `Music.py` are the following variables:
 
 ```python
 CHORUS_INDENTIFIER = '{CHORUS}'
@@ -65,7 +65,9 @@ Slide 3: 1st verse
 ## Runing MusicBooker
 #### Windows
 
-Install python3 and run `main.py`.
+Install [Python3](http://www.python.org/downloads/) and using Windows command line navigate to `MusicBooker` folder and run:
+
+    $ python3 main.py
 
 ##### Linux
 
@@ -75,7 +77,11 @@ In order to run this script on a Linux system you just need to navigate to the f
 
 #### Console Interface
 
-Once the application is running console will ask for the needed information, such as document title, date and music files.
+Once the application is running console will ask for the needed information, such as document title, date and music files. The application will automatically save a log of the musics used.
+
+This log can later be used to run the application again, using the log file name as argument:
+
+    $ ./main.py log
 
 ##### Tip: 
 
@@ -90,7 +96,9 @@ Once the application is finished it is generated a folder called `result`contain
 In order to compile the resulting files of this script you need to have a [LaTeX](http://www.latex-project.org/) compiler and [LaTeX Songs package](http://songs.sourceforge.net/) installed on your computer.
 
 #### Windows
-On a Windows sytem you can use [MiKTeX](http://miktex.org/).
+On a Windows sytem you can use [MiKTeX](http://miktex.org/). Once again in Windows command line navigate to `result` folder and run:
+
+    $ pdflatex file.tex
 
 #### Linux
 On a debian based Linux system you can use the following command line code to install the LaTeX compiler and Songs package:

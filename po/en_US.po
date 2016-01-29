@@ -1,15 +1,15 @@
 # English translations for PACKAGE package.
-# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# Copyright (C) 2016 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# Rafael Gil, 2015.
+#  <rafael.gil@sapo.pt>, 2016.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-29 15:58+0100\n"
-"PO-Revision-Date: 2015-08-29 15:59+0100\n"
-"Last-Translator: Rafael Gil\n"
+"POT-Creation-Date: 2016-01-28 22:30+0000\n"
+"PO-Revision-Date: 2016-01-28 22:31+0000\n"
+"Last-Translator:  <rafael.gil@sapo.pt>\n"
 "Language-Team: English\n"
 "Language: en_US\n"
 "MIME-Version: 1.0\n"
@@ -17,26 +17,46 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: main.py:20
+#: Music.py:254
+msgid "Printing"
+msgstr "Printing"
+
+#: main.py:16
+msgid "Title"
+msgstr "Title"
+
+#: main.py:17
+msgid "Date"
+msgstr "Date"
+
+#: main.py:22
+msgid "File"
+msgstr "File"
+
+#: main.py:23
+msgid "Subtitle"
+msgstr "Subtitle"
+
+#: main.py:41
 msgid "Select a file title: "
 msgstr "Select a file title: "
 
-#: main.py:21
+#: main.py:42
 msgid "Select a file date: "
 msgstr "Select a file date: "
 
-#: main.py:26
+#: main.py:47
 msgid "---- (press enter when finnished) ----"
 msgstr "---- (press enter when finnished) ----"
 
-#: main.py:28
+#: main.py:49
 msgid ": Enter music file: "
 msgstr ": Enter music file: "
 
-#: main.py:33
+#: main.py:54
 msgid "The entered file does not exist."
 msgstr "The entered file does not exist."
 
-#: main.py:36
+#: main.py:57
 msgid ": Enter music subtitle: "
 msgstr ": Enter music subtitle: "

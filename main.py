@@ -1,47 +1,96 @@
 #!/usr/bin/python3
 # coding=utf-8
 
+import i18n
 from Music import Music
 import os
-import i18n
 import readline
+import sys
 
 # Translation function declaration
 _ = i18n.language.gettext
 
+def write_log(title, date, musiclist):
+    log_file = open('log', 'w')
 
-# Sets console tab autocompletion in source/ folder
-current_dir = os.getcwd()
-os.chdir("source/")
-readline.set_completer_delims(' \t\n;')
-readline.parse_and_bind("tab: complete")
+    log_file.write(_("Title") + ":\t" + title + "\n")
+    log_file.write(_("Date") + ":\t" + date + "\n")
 
+    log_file.write("-----\n")
 
-document_title = input(_("Select a file title: "))
-document_date = input(_("Select a file date: "))
+    log_file.write("1. " + _("File") + ":\t" + musiclist[0][1] + "\n")
+    log_file.write("1 " + _("Subtitle") + ":\t" + musiclist[0][0] + "\n")
 
-i = 1
+    for i in range(1, len(musiclist)):
+        log_file.write("-----\n")
+        log_file.write("{}. ".format(i+1) + _("File") + ":\t" + musiclist[i][1] + "\n")
+        log_file.write("{}. ".format(i+1) + _("Subtitle") + ":\t" + musiclist[i][0] + "\n")
+
+    log_file.close()
+
+# ---------------------
+# --- Get user Info ---
+# ---------------------
+
+document_title = ""
+document_date = ""
 music_list = []
 
-print(_("---- (press enter when finnished) ----"))
-while True:
-    music_file = input(str(i) + _(": Enter music file: "))
+if len(sys.argv) == 1: # In case user does not set a log file
 
-    if not music_file:
-        break
-    elif not os.path.isfile(music_file):
-        print(_("The entered file does not exist."))
-        continue
+    # Sets console tab autocompletion in source/ folder
+    current_dir = os.getcwd()
+    os.chdir("source/")
+    readline.set_completer_delims(' \t\n;')
+    readline.parse_and_bind("tab: complete")
 
-    subtitle = input(str(i) + _(": Enter music subtitle: "))
 
-    music_list += [[subtitle, music_file]]
+    document_title = input(_("Select a file title: "))
+    document_date = input(_("Select a file date: "))
 
-    print("----")
-    i += 1
+    i = 1
+    music_list = []
 
-# Changes cosole location back to root
-os.chdir(current_dir)
+    print(_("---- (press enter when finnished) ----"))
+    while True:
+        music_file = input(str(i) + _(": Enter music file: "))
+
+        if not music_file:
+            break
+        elif not os.path.isfile(music_file):
+            print(_("The entered file does not exist."))
+            continue
+
+        subtitle = input(str(i) + _(": Enter music subtitle: "))
+
+        music_list += [[subtitle, music_file]]
+
+        print("----")
+        i += 1
+
+    # Changes cosole location back to root
+    os.chdir(current_dir)
+
+    write_log(document_title, document_date, music_list)
+
+else: #In case user sets a log file in arguments
+    log_file = open(sys.argv[1], 'r')
+
+    document_title = log_file.readline().split(":")[1].strip()
+    document_date = log_file.readline().split(":")[1].strip()
+
+
+    while log_file.readline():
+        music_file = log_file.readline().split(":")[1].strip()
+        subtitle = log_file.readline().split(":")[1].strip()
+
+        if not os.path.isfile('source/'+music_file):
+            print(music_file + ": " + _("The entered file does not exist."))
+            sys.exit()
+
+        music_list += [[subtitle, music_file]]
+
+    log_file.close()
 
 # -----------------
 # --- User Info ---
@@ -96,9 +145,12 @@ presentation_inic = """\\documentclass[11pt, aspectratio=169]{beamer}
 \\setbeamercolor{title}{fg=white}
 %%\\setbeamercolor{frametitle}{fg=white}
 
-\\usepackage[scaled=1.6]{helvet}
-\\renewcommand\\familydefault{\\sfdefault} 
+\\usepackage[scaled=1.9]{helvet}
+\\renewcommand\\familydefault{\\sfdefault}
 
+\\setbeamersize{text margin left=8pt,text margin right=8pt} %% Margins
+\\renewcommand{\\baselinestretch}{2.5} %% Line spacing
+\\renewcommand{\\seriesdefault}{\\bfdefault} %% Bold
 
 \\title{%s}
 \\subtitle{%s}

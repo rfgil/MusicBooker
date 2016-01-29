@@ -1,5 +1,10 @@
 # coding=utf-8
 
+import math
+import i18n
+
+_ = i18n.language.gettext
+
 CHORUS_INDENTIFIER = '{CHORUS}'
 ORDER_INDENTIFIER = '{ORDER}'
 
@@ -208,6 +213,37 @@ class Music():
         chords_file.write(musica_fim)
         lyrics_file.write(musica_fim)
 
+    def writer(self, text):
+          """
+          Creates a verse or chorus in LaTeX code bearing in mind that each slide
+          can display only up to 7 lines with the actual settings
+
+          @param  text		Verse or chorus to write in LaTeX
+
+          @return output	Verse or chorus LaTeX code
+          """
+          text = text.rstrip()
+          lines = text.split('\n')
+
+          number_of_slides = math.ceil(len(lines) / 7) # Each slide can display only up to 7
+          number_of_lines = []
+
+	  # Sets how many lines are going into each slide
+          for slide in range(number_of_slides - 1):
+              number_of_lines.append(int(len(lines) / number_of_slides))
+          number_of_lines.append(len(lines) - len(number_of_lines)*int(len(lines) / number_of_slides))
+
+          output = ""
+          current_line = 0
+          for slide in range(number_of_slides):
+              output += '\\begin{frame}\n'
+              for i in range(number_of_lines[slide]):
+                  output += lines[current_line] + '\n'
+                  current_line += 1
+              output += '\\end{frame}\n\n'
+
+          return output
+
     def write_presentation(self, presentation_file):
         """
         Writes presentation LaTeX code to a file
@@ -215,16 +251,16 @@ class Music():
         @param presentation_file
         """
         presentation_file.write('\n%---------- ' + self.name + ' ----------\n\n')
-        print("Printing: " + self.name)
+        print(_("Printing")+ ": " + self.name)
         for item in self.order:
-            presentation_file.write('\\begin{frame}\n')
+            # presentation_file.write('\\begin{frame}\n')
 
             if item == CHORUS_INDENTIFIER:
-                presentation_file.write(self.chorus)
+                presentation_file.write(self.writer(self.chorus))
 
             else:
-                presentation_file.write(self.verse[item])
+                presentation_file.write(self.writer(self.verse[item]))
 
-            presentation_file.write('\\end{frame}\n\n')
+            # presentation_file.write('\\end{frame}\n\n')
 
         presentation_file.write('\\begin{frame}\n\\end{frame}\n\n')
