@@ -72,6 +72,7 @@ class Music():
 
         @return String
         """
+        chords_line = chords_line.rstrip()
         for i in range(len(chords_array) - 1, -1, -1):
             if chords_array[i] != '':
                 spaces = 0
