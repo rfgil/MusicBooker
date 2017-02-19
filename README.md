@@ -10,9 +10,15 @@ In the begining of the file `Music.py` are the following variables:
 ```python
 CHORUS_INDENTIFIER = '{CHORUS}'
 ORDER_INDENTIFIER = '{ORDER}'
+COMMENT_INDENTIFIER = '//'
 ```
 
-`CHORUS_INDENTIFIER` is used to identify the chorus in the music file. And `ORDER_INDENTIFIER` is used to set the order in which verses are suposed to be displayed in the presentation file. Here is a example of a music file:
+`CHORUS_INDENTIFIER` is used to identify the chorus in the music file.
+
+`COMMENT_INDENTIFIER` is used to comment lines source files.
+
+
+`ORDER_INDENTIFIER` is used to set the order in which verses are suposed to be displayed in the presentation file. Here is a example of a music file:
 
 ```
 {ORDER}: 1, {CHORUS}, 1, 2

@@ -7,6 +7,7 @@ _ = i18n.language.gettext
 
 CHORUS_INDENTIFIER = '{CHORUS}'
 ORDER_INDENTIFIER = '{ORDER}'
+COMMENT_INDENTIFIER = '//' 
 
 
 class Music():
@@ -126,6 +127,10 @@ class Music():
                 self.has_chorus = True
                 if current_verse == 0:
                     self.start_with_chorus = True
+
+            elif COMMENT_INDENTIFIER in line:
+                pass
+
 
             elif not line.strip():  # line is empty
                 if is_chorus:
