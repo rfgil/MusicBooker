@@ -109,8 +109,11 @@ class Music():
         for line in my_file:
             line_chords = line
             line = line.rstrip()
-
-            if self.is_chords(line_chords):  # Sets a array containing all chords in the correct position
+            
+            if COMMENT_INDENTIFIER in line:
+                continue
+            
+            elif self.is_chords(line_chords):  # Sets a array containing all chords in the correct position
                 chords_array = line.split(' ')
                 continue
 
@@ -127,9 +130,6 @@ class Music():
                 self.has_chorus = True
                 if current_verse == 0:
                     self.start_with_chorus = True
-
-            elif COMMENT_INDENTIFIER in line:
-                pass
 
 
             elif not line.strip():  # line is empty
